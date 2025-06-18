@@ -18,11 +18,9 @@ mongoose.connect(process.env.LINK) //connecting db
 
 
 // tells express to serve static files dekat folder public
-app.use(express.static(path.join(__dirname, 'public')));
-
-// redirect to index.html aka landing page
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 const PORT = 5000;
