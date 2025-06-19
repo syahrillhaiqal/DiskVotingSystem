@@ -1,3 +1,5 @@
+const BASE_URL = "https://diskvotingsystem-production.up.railway.app";
+
 // Global variables
 let selectedCandidates = new Map(); // Map to store candidate ID -> name
 let currentStudentId = "";
@@ -186,7 +188,7 @@ async function checkID() {
     console.log("id", id);
 
     try {
-        const response = await fetch("http://localhost:5000/check", {
+        const response = await fetch(`${BASE_URL}/check`, {
             method: "Post",
             headers: {
                 "Content-Type": "application/json",
@@ -223,7 +225,7 @@ function addVote() {
     console.log("Voted for:", voteValues);
     console.log("id", id);
 
-    fetch("http://localhost:5000/addVote", {
+    fetch(`${BASE_URL}/addVote`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -243,7 +245,7 @@ function addVote() {
 
 async function loadCandidate() {
     try {
-        const response = await fetch("http://localhost:5000/getCandidates");
+        const response = await fetch(`${BASE_URL}/getCandidates`);
         const { candidates } = await response.json();
         console.log(candidates);
 

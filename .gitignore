@@ -19,9 +19,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Build output  
-dist/
-build/
 
 # Optional: Local database or data files
 *.sqlite
