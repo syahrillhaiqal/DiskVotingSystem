@@ -75,64 +75,6 @@ document.querySelectorAll('.candidate-selector').forEach(selector => {
     });
 });
 
-function updateConfirmationSection() {
-    const confirmationSection = document.getElementById('confirmationSection');
-    const selectedCandidatesList = document.getElementById('selectedCandidatesList');
-    const actionBar = document.getElementById('actionBar');
-    
-    if (selectedCandidates.size > 0) {
-        // Show confirmation section
-        confirmationSection.classList.remove('hidden');
-        // Show action bar
-        actionBar.classList.remove('hidden');
-        // Clear previous list
-        selectedCandidatesList.innerHTML = '';
-        // Add selected candidates to the list
-        selectedCandidates.forEach((name, id) => {
-            const candidateItem = document.createElement('div');
-            candidateItem.className = 'flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200';
-            candidateItem.innerHTML = `
-                <div class="flex items-center">
-                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
-                        <i class="fas fa-check text-white text-sm"></i>
-                    </div>
-                    <span class="font-semibold text-green-800">${name}</span>
-                </div>
-                <button 
-                    onclick="removeCandidate('${id}')" 
-                    class="text-red-500 hover:text-red-700 transition-colors"
-                    title="Remove ${name}"
-                >
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            selectedCandidatesList.appendChild(candidateItem);
-        });
-    } else {
-        // Hide confirmation section
-        confirmationSection.classList.add('hidden');
-        // Hide action bar
-        actionBar.classList.add('hidden');
-    }
-}
-
-function removeCandidate(candidateId) {
-    const selector = document.querySelector(`[data-candidate="${candidateId}"]`);
-    if (selector) {
-        const radio = selector.querySelector('.custom-radio');
-        const card = selector.closest('.candidate-card');
-        // Remove from selection
-        selectedCandidates.delete(candidateId);
-        radio.classList.remove('checked');
-        selector.classList.remove('selected');
-        card.classList.remove('selected');
-        // Update vote counter
-        document.getElementById('voteCount').textContent = selectedCandidates.size;
-        // Update confirmation section and action bar
-        updateConfirmationSection();
-    }
-}
-
 function cancelVote() {
     // Clear all selections
     selectedCandidates.clear();
