@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISK Voting Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-green-600 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="../assets/img/logo-disk.jpg" alt="DISK Logo" style="width:100px;height:50px;object-fit:cover; border:none; border-radius:12px;" class="mr-2">
+                    <i class="fas fa-vote-yea text-2xl"></i>
+                    <h1 class="text-2xl font-bold">DISK Voting Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm">
+                        <span class="opacity-75">Last Updated:</span>
+                        <span id="lastUpdated" class="font-semibold">12:34 PM, 2024-06-15</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex space-x-8">
+                <button onclick="showTab('overview')" id="tab-overview" class="tab-btn py-4 px-2 border-b-2 border-green-500 text-green-600 font-medium">
+                    <i class="fas fa-chart-line mr-2"></i>Overview
+                </button>
+                <button onclick="showTab('results')" id="tab-results" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-poll mr-2"></i>Results
+                </button>
+                <button onclick="showTab('voters')" id="tab-voters" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-users mr-2"></i>Voters
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Overview Tab -->
+        <div id="overview-tab" class="tab-content">
+
+            <h2 class="text-xl font-bold text-gray-800">2025/26 Disk Council Election</h2>
+
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-users text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Eligible Voters</p>
+                            <p class="text-2xl font-bold text-gray-800">2,847</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-vote-yea text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Votes Submitted</p>
+                            <p class="text-2xl font-bold text-gray-800">1,523</p>
+                            <p class="text-xs text-blue-600">+5 in last hour</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center">
+                        <div class="bg-orange-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-clock text-orange-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Voting Period</p>
+                            <p class="text-lg font-bold text-gray-800">Jun 15 - 22</p>
+                            <p class="text-xs text-orange-600">Ends in 2d 14h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Candidate Results Bar Chart Only -->
+            <div class="bg-white rounded-lg shadow-md p-6 w-full">
+                <h3 class="text-lg font-semibold mb-4">Current Candidate Votes</h3>
+                <div class="h-96 w-full">
+                    <canvas id="candidateBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Tab -->
+        <div id="results-tab" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-6">Election Results</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/48x48/22c55e/ffffff?text=SJ" alt="Sarah Johnson" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Sarah Johnson</h3>
+                                <p class="text-sm text-gray-600">Student Council President</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-green-600">487</p>
+                            <p class="text-sm text-gray-600">32.0% of votes</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/48x48/6b7280/ffffff?text=MC" alt="Michael Chen" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Michael Chen</h3>
+                                <p class="text-sm text-gray-600">Student Council President</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-gray-600">423</p>
+                            <p class="text-sm text-gray-600">27.8% of votes</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/48x48/6b7280/ffffff?text=ER" alt="Emma Rodriguez" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Emma Rodriguez</h3>
+                                <p class="text-sm text-gray-600">Student Council President</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-gray-600">378</p>
+                            <p class="text-sm text-gray-600">24.8% of votes</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/48x48/6b7280/ffffff?text=DK" alt="David Kim" class="w-12 h-12 rounded-full mr-4">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">David Kim</h3>
+                                <p class="text-sm text-gray-600">Student Council President</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-gray-600">235</p>
+                            <p class="text-sm text-gray-600">15.4% of votes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voters Tab -->
+        <div id="voters-tab" class="tab-content hidden">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold">Voter Information</h2>
+                </div>
+
+                <!-- Voter Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">Total Registered</p>
+                        <p class="text-2xl font-bold text-green-600">2,847</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">Voted</p>
+                        <p class="text-2xl font-bold text-blue-600">1,523</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">Pending</p>
+                        <p class="text-2xl font-bold text-orange-600">1,324</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">Turnout Rate</p>
+                        <p class="text-2xl font-bold text-gray-600">53.5%</p>
+                    </div>
+                </div>
+
+                <!-- Voter Table with DataTables -->
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto text-sm text-left text-gray-700">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vote Date/Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">V001</td>
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span>
+                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">2024-06-15 12:34</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">V002</td>
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">Pending</span>
+                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">V003</td>
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span>
+                                </td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">2024-06-15 11:22</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.add('hidden'));
+            
+            // Remove active state from all tabs
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.classList.remove('border-green-500', 'text-green-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            
+            // Add active state to selected tab
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+            activeTab.classList.add('border-green-500', 'text-green-600');
+        }
+
+        // Update last updated time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const dateString = now.toLocaleDateString('en-CA');
+            document.getElementById('lastUpdated').textContent = `${timeString}, ${dateString}`;
+        }
+
+        // Initialize charts
+        let turnoutChart = null;
+        let resultsChart = null;
+        let candidateBarChart = null;
+        
+        function initCharts() {
+            // Destroy existing charts if they exist
+            if (candidateBarChart) {
+                candidateBarChart.destroy();
+            }
+            // Candidate Bar Chart (20 candidates)
+            const candidateBarCtx = document.getElementById('candidateBarChart').getContext('2d');
+            candidateBarChart = new Chart(candidateBarCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Candidate 1', 'Candidate 2', 'Candidate 3', 'Candidate 4', 'Candidate 5',
+                        'Candidate 6', 'Candidate 7', 'Candidate 8', 'Candidate 9', 'Candidate 10',
+                        'Candidate 11', 'Candidate 12', 'Candidate 13', 'Candidate 14', 'Candidate 15',
+                        'Candidate 16', 'Candidate 17', 'Candidate 18', 'Candidate 19', 'Candidate 20'
+                    ],
+                    datasets: [{
+                        label: 'Votes',
+                        data: [120, 98, 134, 87, 156, 110, 95, 140, 102, 99, 123, 111, 130, 90, 105, 115, 108, 100, 97, 112],
+                        backgroundColor: '#22c55e',
+                        borderRadius: 6,
+                        maxBarThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#f3f4f6'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                },
+                                maxRotation: 60,
+                                minRotation: 30
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f3f4f6'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setTimeout(initCharts, 100);
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>
