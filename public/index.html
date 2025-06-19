@@ -6,7 +6,7 @@
         <!-- Tailwind CSS -->
         <script src="https://cdn.tailwindcss.com"></script>
 
-        <link rel="icon" href="assets/img/logo-disk.jpg" type="image/x-icon">
+        <link rel="icon" href="assets/img/logo-disk.jpg" type="image/x-icon" />
         <!-- Font Awesome -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -21,9 +21,7 @@
 
         <title>DISK Voting System</title>
     </head>
-    <body
-        class="font-sans pt-20 pb-24"
-    >
+    <body class="font-sans pt-20 pb-24">
         <!-- Top Navbar -->
         <nav
             class="bg-white shadow-lg border-b-2 border-green-100 fixed top-0 left-0 right-0 z-50"
@@ -43,13 +41,22 @@
 
         <div class="container mx-auto px-6 py-5">
             <!-- Header Section -->
-            <div class="text-center mb-8 px">
-                <h1 class="text-white text-4xl md:text-5xl font-bold mb-3">
-                    High Council Election System
-                </h1>
-                <p id="instruction-text" class="text-white/90 text-md">
-                    Please enter your student ID to begin voting
-                </p>
+            <div class="relative text-center mb-10">
+                <div
+                    class="inline-block bg-white/20 backdrop-blur-md shadow-xl rounded-2xl px-6 py-6 md:px-10 md:py-8 border border-white/30"
+                >
+                    <h1
+                        class="text-white text-3xl md:text-5xl font-extrabold mb-3 drop-shadow-lg"
+                    >
+                        High Council Election System
+                    </h1>
+                    <p
+                        id="instruction-text"
+                        class="text-white/90 text-base md:text-lg font-medium"
+                    >
+                        Please enter your student ID to begin voting
+                    </p>
+                </div>
             </div>
 
             <!-- Student ID Form -->
@@ -81,18 +88,18 @@
             <!-- Candidates Section -->
             <div id="candidatesSection" class="hidden">
                 <div class="text-center mb-8">
-                    <h2 class="text-white text-2xl md:text-3xl font-bold mb-3">
-                        Choose Your Candidates
-                    </h2>
-                    <p class="text-white/90 text-base md:text-lg">
-                        Select two candidates you want to vote for
+                    <p class="text-white/90 text-sm md:text-base mt-3">
+                        Please select
+                        <span class="font-semibold underline">exactly two</span>
+                        candidates to cast your vote.
                     </p>
                 </div>
 
                 <!-- Candidate List -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="loadCandidates">
-                    
-                </div>
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    id="loadCandidates"
+                ></div>
             </div>
         </div>
 

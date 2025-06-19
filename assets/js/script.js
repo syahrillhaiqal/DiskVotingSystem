@@ -24,6 +24,10 @@ document
         const submitBtn = document.getElementById("submitBtn");
         const btnText = submitBtn.querySelector(".btn-text");
 
+        // Show loading state
+        btnText.innerHTML = '<span class="spinner mr-2"></span>Verifying...';
+        submitBtn.disabled = true;
+
         console.log("id", studentId);
 
         const response = await fetch(`${BASE_URL}/check`, {
@@ -39,11 +43,6 @@ document
         if (response.ok) {
             console.log("StudentData", data);
             if (studentId !== "") {
-                // Show loading state
-                btnText.innerHTML =
-                    '<span class="spinner mr-2"></span>Verifying...';
-                submitBtn.disabled = true;
-
                 // Simulate verification
                 setTimeout(() => {
                     currentStudentId = studentId;
@@ -61,7 +60,7 @@ document
                     // Update instruction text
                     document.getElementById(
                         "instruction-text"
-                    ).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
+                    ).textContent = `Welcome, ${studentId}. Please select your preferred candidates.`;
 
                     // Reset button
                     btnText.textContent = "Continue to Vote";
@@ -73,6 +72,8 @@ document
                 "Student ID is invalid or you have already voted.",
                 "warning"
             );
+            btnText.textContent = "Continue to Vote";
+            submitBtn.disabled = false;
         }
     });
 
@@ -292,7 +293,7 @@ async function loadCandidate() {
             const imageSrc = `../assets/img/vote_image${imageIndex}.jpg`;
             const card = document.createElement("div");
             card.className =
-                "candidate-card bg-green-50 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent";
+                "candidate-card bg-green-50 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent mb-6";
             card.innerHTML = `
                 <div class="w-full aspect-[9/16] bg-gray-200 flex items-center justify-center overflow-hidden">
                 <img
