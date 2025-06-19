@@ -1,0 +1,101 @@
+/* Custom styles for radio buttons and selections */
+.candidate-card.selected {
+  border-color: #4a7c59;
+  box-shadow: 0 8px 25px rgba(74, 124, 89, 0.2);
+}
+
+.candidate-selector.selected {
+  background: linear-gradient(135deg, #4a7c59 0%, #2d5a27 100%);
+  color: white;
+}
+
+.custom-radio.checked {
+  background: #4a7c59;
+  border-color: #4a7c59;
+}
+
+.custom-radio.checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+.candidate-selector.selected .custom-radio {
+  border-color: white;
+  background: white;
+}
+
+.candidate-selector.selected .custom-radio::after {
+  background: #4a7c59;
+}
+
+.success-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.confirmation-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom alert */
+.custom-alert {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050;
+  min-width: 300px;
+  max-width: 90%;
+}
+
+.custom-alert-visible {
+    background: #fffbe6;
+    color: #b45309;
+    border: 1.5px solid #fde68a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1100;
+}
+
+.alert-warning.custom-alert-visible {
+    background: #fffbe6;
+    color: #b45309;
+    border-color: #fde68a;
+}
+
+.alert-danger.custom-alert-visible {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
