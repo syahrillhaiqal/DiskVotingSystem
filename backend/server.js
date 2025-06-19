@@ -1,84 +1,77 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const path = require('path');
-
 const app = express();
 app.use(cors());
 app.use(express.json());
+const path = require('path');
+const Students =  require('../model/Students');
+const Candidates =  require('../model/Candidate');
 
-// Import models
-const Students = require('../model/Students');
-const Candidates = require('../model/Candidate');
-
-// Load environment variables
 require("dotenv").config({ path: "../.env" });
 
-// Connect to MongoDB
-mongoose.connect(process.env.LINK)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log('Connection error:', err));
+mongoose.connect(process.env.LINK) //connecting db
 
-// Serve static files from /public
-const publicPath = path.join(__dirname, '..', 'public');
-app.use(express.static(publicPath));
+    .then(() => console.log('MongoDB connected'))
 
-// Serve index.html on root route
+    .catch(err => console.log('Connection error:', err));
+
+
+// tells express to serve static files dekat folder public
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.get('/', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
-// ✅ Use Railway's dynamic port or fallback to 5000 locally
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
-// ==== ROUTES ==== //
 
-// Check student voting status
-app.post('/check', async (req, res) => {
-  const { id } = req.body;
-  console.log("Checking ID:", id);
+app.post('/check', async (req,res) =>{
+  
+    const { id } = req.body;
+    console.log(id);
 
-  try {
-    const stud = await Students.find({ id, voted: false });
+    try{
+      
+       const stud = await Students.find({ id,voted:false});
 
-    if (stud.length > 0) {
-      console.log("Matched Students:", stud);
-      res.status(201).json({ stud });
-    } else {
-      console.log("Student does not exist or has already voted.");
-      res.status(404).json({ error: "Student does not exist" });
+       if(stud.length > 0){
+         console.log("Matched Students:", stud);
+        res.status(201).json({stud });
+       }else{
+         console.log("Student does not exist");
+         res.status(404).json({ error: "Student does not exist" });
+       }
+        
+       
     }
-  } catch (e) {
-    console.error("Check error:", e);
-    res.status(500).json({ error: "Server error" });
-  }
+    catch (e) {
+        console.error(e);
+    }
 });
 
-
-// Submit votes
 app.post('/addVote', async (req, res) => {
-  const { votes, id } = req.body;
-  console.log("Received vote from ID:", id);
+  const { votes,id } = req.body;
+  console.log("Received id",id)
 
   if (!Array.isArray(votes) || votes.length !== 2) {
     return res.status(400).json({ message: "You must vote for exactly 2 candidates." });
   }
 
   try {
-    // Mark student as voted
-    const updateVote = await Students.updateOne({ id }, { $set: { voted: true } });
-    console.log("Updated student:", updateVote);
+  const updateVote = await Students.updateOne({ id }, { $set: { voted:true } });
+  console.log("Updated student:", updateVote);
+  const updateResults = await Promise.all(
+  votes.map(id =>
+    Candidates.updateOne({ id }, { $inc: { total_votes: 1 } })
+  )
+  
+);
 
-    // Increment votes for candidates
-    const updateResults = await Promise.all(
-      votes.map(candidateId =>
-        Candidates.updateOne({ id: candidateId }, { $inc: { total_votes: 1 } })
-      )
-    );
+  console.log("Results:", updateResults);
 
-    console.log("Updated candidate results:", updateResults);
     res.status(200).json({ message: "Votes recorded", results: updateResults });
   } catch (e) {
     console.error("Error updating votes:", e);
@@ -87,7 +80,34 @@ app.post('/addVote', async (req, res) => {
 });
 
 
-// Get candidate list
+app.post('/addVote', async (req, res) => {
+  const { votes,id } = req.body;
+  console.log("Received id",id)
+
+  if (!Array.isArray(votes) || votes.length !== 2) {
+    return res.status(400).json({ message: "You must vote for exactly 2 candidates." });
+  }
+
+  try {
+  const updateVote = await Students.updateOne({ id }, { $set: { voted:true } });
+  console.log("Updated student:", updateVote);
+  const updateResults = await Promise.all(
+  votes.map(id =>
+    Candidates.updateOne({ id }, { $inc: { total_votes: 1 } })
+  )
+  
+);
+
+  console.log("Results:", updateResults);
+
+    res.status(200).json({ message: "Votes recorded", results: updateResults });
+  } catch (e) {
+    console.error("Error updating votes:", e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 app.get("/getCandidates", async (req, res) => {
   try {
     const candidates = await Candidates.find();
