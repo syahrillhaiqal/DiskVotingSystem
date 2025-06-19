@@ -32,9 +32,6 @@ document.getElementById("studentForm").addEventListener("submit", function (e) {
                 "instruction-text"
             ).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
 
-            // Show action bar
-            document.getElementById("actionBar").classList.remove("hidden");
-
             // Reset button
             btnText.textContent = "Continue to Vote";
             submitBtn.disabled = false;
@@ -297,6 +294,10 @@ async function loadCandidate() {
         // Attach event listeners to the dynamically added selectors
         document.querySelectorAll(".candidate-selector").forEach((selector) => {
             selector.addEventListener("click", function () {
+
+                // Show action bar right after we select some candidates
+                document.getElementById("actionBar").classList.remove("hidden");
+
                 const candidateId = this.dataset.candidate;
                 const candidateName = this.dataset.name;
                 const radio = this.querySelector(".custom-radio");
