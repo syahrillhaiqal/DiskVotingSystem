@@ -33,16 +33,18 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 app.post('/check', async (req,res) =>{
   
-    const { id } = req.body;
-    console.log(id);
+    const { studentId } = req.body;
+    console.log(studentId);
 
     try{
       
-       const stud = await Students.find({ id,voted:false});
+       const stud = await Students.find({ id : studentId,voted:false});
 
        if(stud.length > 0){
+        
          console.log("Matched Students:", stud);
-        res.status(201).json({stud });
+        res.status(200).json({ stud });
+
        }else{
          console.log("Student does not exist");
          res.status(404).json({ error: "Student does not exist" });
@@ -56,15 +58,17 @@ app.post('/check', async (req,res) =>{
 });
 
 app.post('/addVote', async (req, res) => {
-  const { votes,id } = req.body;
-  console.log("Received id",id)
+  const { votes,studentId } = req.body;
+  console.log("Received id",studentId)
+  console.log(votes)
 
   if (!Array.isArray(votes) || votes.length !== 2) {
+    console.log("error")
     return res.status(400).json({ message: "You must vote for exactly 2 candidates." });
   }
 
   try {
-  const updateVote = await Students.updateOne({ id }, { $set: { voted:true } });
+  const updateVote = await Students.updateOne({  id : studentId }, { $set: { voted:true } });
   console.log("Updated student:", updateVote);
   const updateResults = await Promise.all(
   votes.map(id =>
