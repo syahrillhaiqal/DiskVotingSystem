@@ -334,6 +334,7 @@ async function loadCandidate() {
   try {
     const response = await fetch('http://localhost:5000/getCandidates');
     const { candidates } = await response.json();
+    console.log(candidates);
 
     const container = document.getElementById('loadCandidates');
     container.innerHTML = '';
