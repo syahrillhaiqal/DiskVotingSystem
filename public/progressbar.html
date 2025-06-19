@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Progress Bars</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Optional: Add a fade-in animation on page load */
+    .progress-fill {
+      width: 0;
+      transition: width 1s ease-in-out;
+    }
+    body.loaded .progress-fill {
+      width: 45%;
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-900 p-6">
+
+  <div class="mb-1 text-base font-medium dark:text-white">Small</div>
+  <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700">
+    <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500 progress-fill"></div>
+  </div>
+
+  <div class="mb-1 text-base font-medium dark:text-white">Default</div>
+  <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+    <div class="bg-blue-600 h-2.5 rounded-full dark:bg-blue-500 progress-fill"></div>
+  </div>
+
+  <div class="mb-1 text-lg font-medium dark:text-white">Large</div>
+  <div class="w-full h-4 mb-4 bg-gray-200 rounded-full dark:bg-gray-700">
+    <div class="h-4 bg-blue-600 rounded-full dark:bg-blue-500 progress-fill"></div>
+  </div>
+
+  <div class="mb-1 text-lg font-medium dark:text-white">Extra Large</div>
+  <div class="w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
+    <div class="h-6 bg-blue-600 rounded-full dark:bg-blue-500 progress-fill"></div>
+  </div>
+
+  <script>
+    // Trigger animation after page load
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
+  </script>
+
+</body>
+</html>

@@ -57,7 +57,7 @@ document
         }, 1000);
       }
     } else {
-      console.log("Student DNE");
+      console.log("Student DNE")
     }
   });
 
