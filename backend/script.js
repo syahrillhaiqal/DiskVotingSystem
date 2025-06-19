@@ -2,7 +2,7 @@
 let selectedCandidates = new Map(); // Map to store candidate ID -> name
 let currentStudentId = '';
 
-// Student form submission
+// When student submitting student id
 document.getElementById('studentForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -334,6 +334,7 @@ async function loadCandidate() {
   try {
     const response = await fetch('http://localhost:5000/getCandidates');
     const { candidates } = await response.json();
+    console.log(candidates);
 
     const container = document.getElementById('loadCandidates');
     container.innerHTML = '';
