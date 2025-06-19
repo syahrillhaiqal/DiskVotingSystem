@@ -2,7 +2,7 @@
 let selectedCandidates = new Map(); // Map to store candidate ID -> name
 let currentStudentId = '';
 
-// Student form submission
+// When student submitting student id
 document.getElementById('studentForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
