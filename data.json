@@ -1,6 +1,22 @@
 [
-  { "id": "111", "voted": false },
-  { "id": "222", "voted": false },
-  { "id": "333", "voted": false },
-  { "id": "444", "voted": false }
+  { "id": "C001", "name": "Alice Tan", "total_votes": 120 },
+  { "id": "C002", "name": "Ben Lim", "total_votes": 98 },
+  { "id": "C003", "name": "Chong Wei", "total_votes": 156 },
+  { "id": "C004", "name": "Diyana Ariff", "total_votes": 67 },
+  { "id": "C005", "name": "Eric Chan", "total_votes": 143 },
+  { "id": "C006", "name": "Farah Lee", "total_votes": 89 },
+  { "id": "C007", "name": "Ganesh Kumar", "total_votes": 110 },
+  { "id": "C008", "name": "Hafiz Rahman", "total_votes": 134 },
+  { "id": "C009", "name": "Izzah Karim", "total_votes": 77 },
+  { "id": "C010", "name": "Jason Ong", "total_votes": 155 },
+  { "id": "C011", "name": "Kavitha Raj", "total_votes": 102 },
+  { "id": "C012", "name": "Luqman Hakim", "total_votes": 123 },
+  { "id": "C013", "name": "Michelle Wong", "total_votes": 80 },
+  { "id": "C014", "name": "Nadia Zain", "total_votes": 96 },
+  { "id": "C015", "name": "Omar Yusuf", "total_votes": 119 },
+  { "id": "C016", "name": "Priya Devi", "total_votes": 105 },
+  { "id": "C017", "name": "Qayyum Iskandar", "total_votes": 111 },
+  { "id": "C018", "name": "Rashid Salleh", "total_votes": 130 },
+  { "id": "C019", "name": "Suraya Ahmad", "total_votes": 91 },
+  { "id": "C020", "name": "Tengku Amir", "total_votes": 115 }
 ]
