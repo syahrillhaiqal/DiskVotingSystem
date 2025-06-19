@@ -1,14 +1,14 @@
 const BASE_URL = "https://diskvotingsystem-production.up.railway.app";
 const BASE_URL1 = "http://localhost:5000"; //test locally
 
-// document.getElementById("studentIdSection").classList.add("hidden");
-// document
-// .getElementById("candidatesSection")
-// .classList.remove("hidden");
-// document.getElementById(
-// "instruction-text"
-// ).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
-// submitBtn.disabled = false;
+document.getElementById("studentIdSection").classList.add("hidden");
+document
+.getElementById("candidatesSection")
+.classList.remove("hidden");
+document.getElementById(
+"instruction-text"
+).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
+submitBtn.disabled = false;
 
 // Global variables
 let selectedCandidates = new Map(); // Map to store candidate ID -> name
@@ -292,7 +292,7 @@ async function loadCandidate() {
             const imageSrc = `../assets/img/vote_image${imageIndex}.jpg`;
             const card = document.createElement("div");
             card.className =
-                "candidate-card bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent";
+                "candidate-card bg-green-50 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent";
             card.innerHTML = `
                 <div class="w-full aspect-[9/16] bg-gray-200 flex items-center justify-center overflow-hidden">
                 <img
@@ -311,7 +311,7 @@ async function loadCandidate() {
                     ></iframe>
                 </div>
                 <div
-                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-200 rounded-xl cursor-pointer my-4 transition-all duration-300 hover:bg-gray-100"
+                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-300 rounded-xl cursor-pointer my-4 transition-all duration-300 hover:bg-gray-100"
                     data-candidate="${candidate.id}"
                     data-name="${candidate.name}"
                 >
