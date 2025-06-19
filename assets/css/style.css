@@ -1,3 +1,12 @@
+body {
+    min-height: 100vh;
+    background-color: rgb(1, 91, 35);
+    background-image: url('../img/green-background.jpg');
+    background-size: cover;   
+    background-repeat: no-repeat;
+    background-position: center;  
+}
+
 /* Custom styles for radio buttons and selections */
 .candidate-card.selected {
   border-color: #4a7c59;
