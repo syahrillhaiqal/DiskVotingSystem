@@ -1,14 +1,14 @@
 const BASE_URL = "https://diskvotingsystem-production.up.railway.app";
 const BASE_URL1 = "http://localhost:5000"; //test locally
 
-document.getElementById("studentIdSection").classList.add("hidden");
-document
-.getElementById("candidatesSection")
-.classList.remove("hidden");
-document.getElementById(
-"instruction-text"
-).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
-submitBtn.disabled = false;
+// document.getElementById("studentIdSection").classList.add("hidden");
+// document
+// .getElementById("candidatesSection")
+// .classList.remove("hidden");
+// document.getElementById(
+// "instruction-text"
+// ).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
+// submitBtn.disabled = false;
 
 // Global variables
 let selectedCandidates = new Map(); // Map to store candidate ID -> name
