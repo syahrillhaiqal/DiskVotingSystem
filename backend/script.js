@@ -10,33 +10,33 @@ document.getElementById("studentForm").addEventListener("submit", function (e) {
     const submitBtn = document.getElementById("submitBtn");
     const btnText = submitBtn.querySelector(".btn-text");
 
-    if (studentId !== "") {
-        // Show loading state
-        btnText.innerHTML = '<span class="spinner mr-2"></span>Verifying...';
-        submitBtn.disabled = true;
+    // if (studentId !== "") {
+    //     // Show loading state
+    //     btnText.innerHTML = '<span class="spinner mr-2"></span>Verifying...';
+    //     submitBtn.disabled = true;
 
-        // Simulate verification
-        setTimeout(() => {
-            currentStudentId = studentId;
+    //     // Simulate verification
+    //     setTimeout(() => {
+    //         currentStudentId = studentId;
 
-            // Hide student ID section
-            document.getElementById("studentIdSection").classList.add("hidden");
+    //         // Hide student ID section
+    //         document.getElementById("studentIdSection").classList.add("hidden");
 
-            // Show candidates section
-            document
-                .getElementById("candidatesSection")
-                .classList.remove("hidden");
+    //         // Show candidates section
+    //         document
+    //             .getElementById("candidatesSection")
+    //             .classList.remove("hidden");
 
-            // Update instruction text
-            document.getElementById(
-                "instruction-text"
-            ).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
+    //         // Update instruction text
+    //         document.getElementById(
+    //             "instruction-text"
+    //         ).textContent = `Welcome, Student ID: ${studentId}. Please select your preferred candidates.`;
 
-            // Reset button
-            btnText.textContent = "Continue to Vote";
-            submitBtn.disabled = false;
-        }, 1000);
-    }
+    //         // Reset button
+    //         btnText.textContent = "Continue to Vote";
+    //         submitBtn.disabled = false;
+    //     }, 1000);
+    // }
 });
 
 // Cancel Vote Function
