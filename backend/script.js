@@ -358,10 +358,6 @@ async function loadCandidate() {
               allowfullscreen
             ></iframe>
           </div>
-          <p class="text-gray-600 italic p-4 bg-gray-50 rounded-lg border-l-4 border-primary-400 m-0">
-            <i class="fas fa-quote-left mr-2"></i>
-            "Committed to improving student life and academic excellence through innovative programs and inclusive leadership."
-          </p>
           <div
             class="candidate-selector flex items-center gap-4 p-4 bg-gray-200 rounded-xl cursor-pointer my-4 transition-all duration-300 hover:bg-gray-100"
             data-candidate="${candidate.id}"
