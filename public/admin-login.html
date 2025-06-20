@@ -3,72 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - DISK Voting System</title>
+
+    <!-- Disk Icon -->
+    <link rel="icon" href="../assets/img/logo-disk.jpg" type="image/x-icon" />
+
+    
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <title>Admin - DISK Voting System</title>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex items-center justify-center">
-    <div class="max-w-md w-full mx-4">
-        <!-- Login Card -->
-        <div class="bg-white rounded-2xl shadow-2xl p-8">
-            <!-- Header -->
-            <div class="text-center mb-8">
-                <div class="flex justify-center mb-4">
-                    <img src="../assets/img/logo-disk.jpg" alt="DISK Logo" class="h-16 w-32 rounded-lg">
-                </div>
-                <h1 class="text-2xl font-bold text-gray-800 mb-2">Admin Access</h1>
-                <p class="text-gray-600">Enter password to access dashboard</p>
-            </div>
+<body class="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex flex-col">
+    <div class="flex-grow flex items-center justify-center">
 
-            <!-- Login Form -->
-            <form id="adminLoginForm" class="space-y-6">
-                <div>
-                    <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-lock mr-2"></i>Admin Password
-                    </label>
-                    <input 
-                        type="password" 
-                        id="adminPassword" 
-                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all duration-300"
-                        placeholder="Enter admin password"
-                        required
+        <!-- Admin Login Section -->
+        <div id="adminLoginSection" class="max-w-md w-full mx-4">
+            <div class="bg-white rounded-2xl shadow-2xl p-8">
+                <div class="text-center mb-8">
+                    <div class="flex justify-center mb-4">
+                        <img src="../assets/img/logo-disk.jpg" alt="DISK Logo" class="h-16 w-32 rounded-lg">
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Admin Access</h1>
+                    <p class="text-gray-600">Enter password to access dashboard</p>
+                </div>
+                <form id="adminLoginForm" class="space-y-6">
+                    <div>
+                        <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                            <i class="fas fa-lock mr-2"></i>Admin Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="adminPassword" 
+                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-4 focus:ring-green-500/10 outline-none transition-all duration-300"
+                            placeholder="Enter admin password"
+                            required
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        id="loginBtn"
+                        class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-0.5 focus:ring-4 focus:ring-green-500/20"
                     >
+                        <span class="btn-text">Access Dashboard</span>
+                    </button>
+                </form>
+                <div id="errorMessage" class="hidden mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                        <span class="text-red-700 text-sm" id="errorText"></span>
+                    </div>
                 </div>
-
-                <button 
-                    type="submit" 
-                    id="loginBtn"
-                    class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-0.5 focus:ring-4 focus:ring-green-500/20"
-                >
-                    <span class="btn-text">Access Dashboard</span>
-                </button>
-            </form>
-
-            <!-- Error Message -->
-            <div id="errorMessage" class="hidden mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
-                    <span class="text-red-700 text-sm" id="errorText"></span>
+                <div class="text-center mt-6">
+                    <a href="index.html" class="text-green-600 hover:text-green-700 text-sm font-medium">
+                        <i class="fas fa-arrow-left mr-1"></i>Back to Voting
+                    </a>
                 </div>
             </div>
-
-            <!-- Back to Voting -->
             <div class="text-center mt-6">
-                <a href="index.html" class="text-green-600 hover:text-green-700 text-sm font-medium">
-                    <i class="fas fa-arrow-left mr-1"></i>Back to Voting
-                </a>
+                <p class="text-xs text-gray-500">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Secure admin access only
+                </p>
             </div>
         </div>
 
-        <!-- Security Notice -->
-        <div class="text-center mt-6">
-            <p class="text-xs text-gray-500">
-                <i class="fas fa-shield-alt mr-1"></i>
-                Secure admin access only
-            </p>
+        <!-- Dashboard Section (hidden by default) -->
+        <div id="dashboardSection" class="hidden w-full">
+            <div class="bg-gray-50 font-sans flex flex-col">
+                <header class="bg-green-600 text-white shadow-lg">
+                    <div class="container mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <!-- Left Section (Logo and Title) -->
+                        <div class="flex items-center space-x-3 justify-center sm:justify-start">
+                            <img src="../assets/img/logo-disk.jpg" alt="DISK Logo" class="h-12 w-24 rounded-lg" />
+                            <i class="fas fa-vote-yea text-2xl"></i>
+                            <h1 class="text-xl font-bold">DISK Voting Dashboard</h1>
+                        </div>
+
+                        <!-- Right Section (Last Updated) -->
+                        <div class="text-sm mt-3 sm:mt-0 flex justify-center sm:justify-end">
+                            <span class="opacity-75">Last Updated:</span>
+                            <span id="lastUpdated" class="font-semibold ml-1">..</span>
+                        </div>
+                    </div>
+                </header>
+                <nav class="bg-white border-b border-gray-200 sticky top-0 z-10">
+                    <div class="container mx-auto px-6">
+                        <div class="flex space-x-8">
+                            <button onclick="showTab('overview')" id="tab-overview" class="tab-btn py-4 px-2 border-b-2 border-green-500 text-green-600 font-medium"><i class="fas fa-chart-line mr-2"></i>Overview</button>
+                            <button onclick="showTab('results')" id="tab-results" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700"><i class="fas fa-poll mr-2"></i>Results</button>
+                            <button onclick="showTab('voters')" id="tab-voters" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700"><i class="fas fa-users mr-2"></i>Voters</button>
+                        </div>
+                    </div>
+                </nav>
+                <main class="container mx-auto px-6 py-8 flex-grow">
+                    <div id="overview-tab" class="tab-content">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">2025/26 Disk Council Election</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600 mb-1">Total Voters</p>
+                                        <p class="text-2xl font-bold text-blue-800" id="totalVotes">..</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600 mb-1">Students Already Voted</p>
+                                        <p class="text-2xl font-bold text-green-800" id="voted">..</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-orange-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-clock text-orange-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600 mb-1">Students Not Voted</p>
+                                        <p class="text-2xl font-bold text-orange-600" id="unvoted">..</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top 4 Candidates Section -->
+                        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <i class="fas fa-trophy text-yellow-500 mr-2"></i>Top 4 Leading Candidates
+                                </h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="topCandidatesContainer"></div>
+                        </div>
+
+                        <!-- All Candidates Section -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold" id="totalCandidates">..</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="candidatesContainer"></div>
+                        </div>
+                    </div>
+                    <div id="results-tab" class="tab-content hidden">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-xl font-bold mb-6">Election Results</h2>
+                            <div class="space-y-6" id="candidateResults"></div>
+                        </div>
+                    </div>
+                    <div id="voters-tab" class="tab-content hidden">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Voter Analytics</h2>
+                        
+                        <!-- Semester Statistics -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-graduation-cap text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600 mb-1">Semester 2 Turnout</p>
+                                        <p class="text-2xl font-bold text-purple-800" id="semester2Rate">..</p>
+                                        <p class="text-xs text-gray-500" id="semester2Details">..</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-graduation-cap text-indigo-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600 mb-1">Semester 4 Turnout</p>
+                                        <p class="text-2xl font-bold text-indigo-800" id="semester4Rate">..</p>
+                                        <p class="text-xs text-gray-500" id="semester4Details">..</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-cyan-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-graduation-cap text-cyan-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600 mb-1">Semester 5 Turnout</p>
+                                        <p class="text-2xl font-bold text-cyan-800" id="semester5Rate">..</p>
+                                        <p class="text-xs text-gray-500" id="semester5Details">..</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-lg font-bold mb-6">Voter Information</h3>
+                            <div class="overflow-x-auto">
+                                <table id="votersTable" class="display" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Semester</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="voterTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                
+            </div>
         </div>
     </div>
-
-    <script src="../assets/js/login.js"></script>
+    
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-4">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Developed by Syahril Haiqal and Umar Syakir (CDCS1104 Session 23/24 students) </p>
+            <p class="text-xs text-green-200 mt-1">Managed by Naufal Hakimi (President DISK 24/25)</p>
+        </div>
+    </footer>
+    
+    <script src="../assets/js/admin.js"></script>
 </body>
-</html> 
+</html>
