@@ -335,7 +335,7 @@ async function loadCandidate() {
                 />
                 </div>
                 <div class="p-5 md:p-6">
-                <div class="rounded-xl overflow-hidden mb-4">
+                <div class="rounded-xl overflow-hidden mb-4 bg-gray-200">
                     <iframe
                     class="w-full h-48 md:h-56 border-0"
                     src="https://www.youtube.com/embed/YEU_GYS7yqI?si=GOb92SCqD9duF8Sb"
@@ -344,12 +344,12 @@ async function loadCandidate() {
                     ></iframe>
                 </div>
                 <div
-                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-300 rounded-xl cursor-pointer my-4 transition-all duration-300 hover:bg-gray-100"
+                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-300 rounded-xl cursor-pointer my-4 transition-all duration-300 hover:bg-emerald-200"
                     data-candidate="${candidate.id}"
                     data-name="${candidate.name}"
                 >
                     <div class="custom-radio w-6 h-6 border-3 border-primary-400 rounded-full flex-shrink-0 relative"></div>
-                    <h3 class="candidate-name text-sm md:text-2xl font-bold m-0">Vote for ${
+                    <h3 class="candidate-name text-sm md:text-xl font-bold m-0">Vote for ${
                         candidate.name
                     }</h3>
                 </div>
