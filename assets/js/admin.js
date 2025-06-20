@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const stats = semesterStats[sem];
                 const rate =
                     stats.total > 0
-                        ? ((stats.voted / stats.total) * 100).toFixed(1)
+                        ? ((stats.voted / stats.total) * 100).toFixed(2)
                         : "0.0";
                 document.getElementById(
                     `semester${sem}Rate`
