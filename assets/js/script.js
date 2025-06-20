@@ -332,6 +332,7 @@ async function loadCandidate() {
                     class="object-cover w-full h-full"
                     alt="Candidate ${index + 1}"
                     onerror="this.src='../assets/img/placeholder-profile.jpg'"
+                    loading="lazy"
                 />
                 </div>
                 <div class="p-5 md:p-6">
@@ -340,6 +341,7 @@ async function loadCandidate() {
                     class="w-full h-48 md:h-56 border-0"
                     src="https://www.youtube.com/embed/YEU_GYS7yqI?si=GOb92SCqD9duF8Sb"
                     title="Campaign Video"
+                    loading="lazy"
                     allowfullscreen
                     ></iframe>
                 </div>
