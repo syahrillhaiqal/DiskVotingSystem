@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function fetchVotes() {
-  const response = await fetch("http://localhost:5000/getStudents");
+  const response = await fetch(`${BASE_URL}/getStudents`);
   const stud = await response.json();
   console.log(stud);
 
