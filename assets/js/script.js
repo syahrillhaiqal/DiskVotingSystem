@@ -1,5 +1,5 @@
-const BASE_URL = "https://diskvotingsystem.up.railway.app";
-const BASE_URL1 = "http://localhost:5000"; //test locally
+const BASE_UR1 = "https://diskvotingsystem.up.railway.app";
+const BASE_URL = "http://localhost:5000"; //test locally
 
 // document.getElementById("studentIdSection").classList.add("hidden");
 // document
