@@ -106,7 +106,7 @@ async function fetchCandidates() {
 
 async function fetchProgress() {
     
-     const response = await fetch("https://diskvotingsystem-production.up.railway.app/getCandidates");
+     const response = await fetch(`${BASE_URL}/getCandidates`);
         const { candidates } = await response.json();
         console.log(candidates);
 
@@ -149,7 +149,7 @@ async function fetchProgress() {
 }
 
 async function fetchTable() {
-  const response = await fetch(`${BASE_URL}/getVoters`);
+  const response = await fetch("https://diskvotingsystem-production.up.railway.app/getVoters");
   const { voters } = await response.json();
   console.log(voters);
 
