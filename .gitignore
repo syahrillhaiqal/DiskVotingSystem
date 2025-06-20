@@ -24,3 +24,7 @@ Thumbs.db
 *.sqlite
 *.bak
 *.db
+
+assets/img/candidate_poster/*.png
+assets/img/candidate_pic/*.png
+
