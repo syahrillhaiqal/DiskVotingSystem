@@ -30,17 +30,21 @@ document
 
         console.log("id", studentId);
 
-        const response = await fetch(`${BASE_URL}/check`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ studentId }),
-        });
+        try {
+            const response = await fetch(`${BASE_URL}/check`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ studentId }),
+            });
 
-        const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-        if (response.ok) {
+            const data = await response.json();
+
             console.log("StudentData", data);
             if (studentId !== "") {
                 // Simulate verification
@@ -67,7 +71,8 @@ document
                     submitBtn.disabled = false;
                 }, 1000);
             }
-        } else {
+        } catch (error) {
+            console.error("Error checking student ID:", error);
             showAlert(
                 "Student ID is invalid or you have already voted.",
                 "warning"
@@ -136,49 +141,60 @@ function closeConfirmationModal() {
 }
 
 // Submit vote after confirm
-function confirmAndSubmitVote() {
+async function confirmAndSubmitVote() {
     closeConfirmationModal();
+
     const studentId = document.getElementById("studentId").value.trim();
-    console.log(studentId);
+
     let candidates = Array.from(selectedCandidates.values());
-    console.log("TEst", candidates);
+
     const submitBtn = document.getElementById("submitVoteBtn");
     const originalContent = submitBtn.innerHTML;
+
     // Show loading state
     submitBtn.innerHTML = '<span class="spinner mr-2"></span>Submitting...';
     submitBtn.disabled = true;
-    // Simulate submission
-    setTimeout(() => {
-        // Show success modal
-        document.getElementById("successModal").classList.add("show");
-        // Reset button
-        submitBtn.innerHTML = originalContent;
-        submitBtn.disabled = false;
-        // Log vote data
-        console.log("Vote submitted:", {
-            studentId: currentStudentId,
-            candidates: Array.from(selectedCandidates.entries()),
-        });
 
-        const votes = Array.from(selectedCandidates.keys());
-        console.log("VOTES", votes);
+    // Log vote data
+    console.log("Vote submitted:", {
+        studentId: currentStudentId,
+        candidates: Array.from(selectedCandidates.entries()),
+    });
 
-        fetch(`${BASE_URL}/addVote`, {
+    const votes = Array.from(selectedCandidates.keys());
+    console.log("VOTES", votes);
+
+    try {
+        const response = await fetch(`${BASE_URL}/addVote`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ votes, studentId }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                alert("Votes successfully recorded.");
-            })
-            .catch((err) => {
-                console.error("Vote error:", err);
-                alert("Error submitting vote.");
-            });
-    }, 1500);
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Vote submission response:", data);
+
+        setTimeout(() => {
+            // Show success modal
+            document.getElementById("successModal").classList.add("show");
+            // Reset button
+            submitBtn.innerHTML = originalContent;
+            submitBtn.disabled = false;
+        }, 1500);
+
+    } catch (error) {
+        console.error("Error submitting vote:", error);
+        showAlert("Error submitting vote. Please try again.", "error");
+        // Reset button
+        submitBtn.innerHTML = originalContent;
+        submitBtn.disabled = false;
+    }
 }
 
 function resetVoting() {
@@ -235,10 +251,8 @@ function showAlert(message, type) {
     }, 5000);
 }
 
-
-
-function addVote() {
-    alert("test");
+async function addVote() {
+    
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
     console.log("id", id);
@@ -255,32 +269,54 @@ function addVote() {
     console.log("Voted for:", voteValues);
     console.log("id", id);
 
-    fetch(`${BASE_URL}/addVote`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ votes: voteValues, id }),
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            alert("Votes successfully recorded.");
-            window.location.href = "index.html";
-        })
-        .catch((err) => {
-            console.error("Vote error:", err);
-            alert("Error submitting vote.");
+    try {
+        const response = await fetch(`${BASE_URL}/addVote`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ votes: voteValues, id }),
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Vote submission response:", data);
+        
+        alert("Votes successfully recorded.");
+        window.location.href = "index.html";
+    } catch (error) {
+        console.error("Error submitting vote:", error);
+        alert("Error submitting vote. Please try again.");
+    }
 }
 
 async function loadCandidate() {
     try {
         const response = await fetch(`${BASE_URL}/getCandidates`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const { candidates } = await response.json();
         console.log(candidates);
 
         const container = document.getElementById("loadCandidates");
         container.innerHTML = "";
+
+        if (!candidates || candidates.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full text-center py-8">
+                    <i class="fas fa-exclamation-triangle text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600 text-lg">No candidates available at the moment.</p>
+                    <p class="text-gray-500 text-sm">Please check back later.</p>
+                </div>
+            `;
+            return;
+        }
 
         candidates.forEach((candidate, index) => {
             // user 3 image only right now
@@ -295,6 +331,7 @@ async function loadCandidate() {
                     src="${imageSrc}"
                     class="object-cover w-full h-full"
                     alt="Candidate ${index + 1}"
+                    onerror="this.src='../assets/img/placeholder-profile.jpg'"
                 />
                 </div>
                 <div class="p-5 md:p-6">
@@ -367,6 +404,18 @@ async function loadCandidate() {
         });
     } catch (error) {
         console.error("Error loading candidates:", error);
+        
+        const container = document.getElementById("loadCandidates");
+        container.innerHTML = `
+            <div class="col-span-full text-center py-8">
+                <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                <p class="text-red-600 text-lg font-semibold mb-2">Failed to load candidates</p>
+                <p class="text-gray-600 text-sm mb-4">There was an error connecting to the server.</p>
+                <button onclick="loadCandidate()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                    <i class="fas fa-redo mr-2"></i>Try Again
+                </button>
+            </div>
+        `;
     }
 }
 

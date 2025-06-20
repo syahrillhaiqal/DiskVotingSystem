@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   </head>
-  <body class="bg-gray-50 font-sans">
+  <body class="bg-gray-50 font-sans flex flex-col h-screen">
     <!-- Header -->
     <header class="bg-green-600 text-white shadow-lg">
       <div class="container mx-auto px-6 py-4">
@@ -81,7 +81,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-8">
+    <main class="container mx-auto px-6 py-8 flex-grow">
       <!-- Overview Tab -->
       <div id="overview-tab" class="tab-content">
         <h2 class="text-xl font-bold text-gray-800 mb-6">
@@ -177,6 +177,20 @@
         </div>
       </div>
     </main>
+    
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-4">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">
+                Developed by CDCS110 Part 4 students, Syahril Haiqal and Umar Syakir
+            </p>
+            <p class="text-xs text-green-200 mt-1">
+                Managed by Naufal Hakimi (President DISK)
+            </p>
+        </div>
+    </footer>
+
     <script src="../assets/js/dashboard.js"></script>
+    
   </body>
 </html>

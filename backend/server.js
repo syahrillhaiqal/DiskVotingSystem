@@ -10,6 +10,9 @@ const Candidates =  require('../model/Candidate');
 
 require("dotenv").config({ path: "../.env" });
 
+// Admin password - take from env
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
 mongoose.connect(process.env.LINK) //connecting db
 
     .then(() => console.log('MongoDB connected'))
@@ -30,7 +33,7 @@ const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
-
+// CHECK STUDENTS ID
 app.post('/check', async (req,res) =>{
   
     const { studentId } = req.body;
@@ -57,6 +60,7 @@ app.post('/check', async (req,res) =>{
     }
 });
 
+// ADD VOTE
 app.post('/addVote', async (req, res) => {
   const { votes,studentId } = req.body;
   console.log("Received id",studentId)
@@ -86,10 +90,7 @@ app.post('/addVote', async (req, res) => {
   }
 });
 
-
-
-
-
+// GET CANDIDATES DATA
 app.get("/getCandidates", async (req, res) => {
   try {
     const candidates = await Candidates.find();
@@ -100,6 +101,7 @@ app.get("/getCandidates", async (req, res) => {
   }
 });
 
+// GET STUDENTS DATA
 app.get("/getStudents", async (req, res) => {
   try {
 
@@ -122,12 +124,39 @@ app.get("/getStudents", async (req, res) => {
   }
 });
 
+// GET VOTERS
 app.get("/getVoters", async (req, res) => {
   try {
     const voters = await Students.find();
     res.status(200).json({ voters });
   } catch (error) {
     console.error("Error fetching candidates:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Admin authentication
+app.post('/admin/login', async (req, res) => {
+  try {
+    const { password } = req.body;
+    
+    if (!password) {
+      return res.status(400).json({ error: "Password is required" });
+    }
+    
+    if (password === ADMIN_PASSWORD) {
+      res.status(200).json({ 
+        success: true, 
+        message: "Authentication successful" 
+      });
+    } else {
+      res.status(401).json({ 
+        success: false, 
+        error: "Invalid password" 
+      });
+    }
+  } catch (error) {
+    console.error("Admin login error:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

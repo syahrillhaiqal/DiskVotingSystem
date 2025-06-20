@@ -21,7 +21,7 @@
 
         <title>DISK Voting System</title>
     </head>
-    <body class="font-sans pt-20 pb-24">
+    <body class="font-sans flex flex-col h-screen">
         <!-- Top Navbar -->
         <nav
             class="bg-white shadow-lg border-b-2 border-green-100 fixed top-0 left-0 right-0 z-50"
@@ -35,15 +35,13 @@
                             class="h-10 w-20 sm:h-14 sm:w-28 rounded-lg"
                         />
                     </a>
-                    <a href="./dashboard.html" class="flex items-center space-x-3">
-                       Admin Test
-                        
-                    </a>
                 </div>
             </div>
         </nav>
 
-        <div class="container mx-auto px-6 py-5">
+        <!-- Main Content -->
+        <div class="container mx-auto px-6 py-5 flex-grow pt-20">
+
             <!-- Header Section -->
             <div class="relative text-center mb-10">
                 <div
@@ -105,6 +103,8 @@
                     id="loadCandidates"
                 ></div>
             </div>
+
+
         </div>
 
         <!-- Action Bar -->
@@ -233,5 +233,22 @@
 
         <!-- Custom JS -->
         <script src="../assets/js/script.js"></script>
+
+        <!-- Footer -->
+        <footer class="bg-green-800 text-white py-4 mt-auto">
+            <div class="container mx-auto px-6 text-center">
+                <p class="text-sm">
+                    Developed by CDCS110 Part 4 students, Syahril Haiqal and Umar Syakir
+                </p>
+                <p class="text-xs text-green-200 mt-1">
+                    Managed by Naufal Hakimi (President DISK)
+                </p>
+                <!-- <div class="mt-2">
+                    <a href="admin-login.html" class="text-xs text-green-300 hover:text-white transition-colors opacity-60 hover:opacity-100">
+                        <i class="fas fa-cog mr-1"></i>Admin
+                    </a>
+                </div> -->
+            </div>
+        </footer>
     </body>
 </html>
