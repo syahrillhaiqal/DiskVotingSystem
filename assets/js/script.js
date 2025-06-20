@@ -344,10 +344,10 @@ async function loadCandidate() {
                     ></iframe>
                 </div>
                 <div
-                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-300 rounded-xl cursor-pointer my-4 transition-all duration-300 hover:bg-emerald-200"
+                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-300 rounded-xl cursor-pointer my-4 transition-all duration-300"
                     data-candidate="${candidate.id}"
                     data-name="${candidate.name}"
-                >
+                > 
                     <div class="custom-radio w-6 h-6 border-3 border-primary-400 rounded-full flex-shrink-0 relative"></div>
                     <h3 class="candidate-name text-sm md:text-xl font-bold m-0">Vote for ${
                         candidate.name
