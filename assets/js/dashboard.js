@@ -78,7 +78,7 @@ async function fetchVotes() {
 }
 
 async function fetchCandidates() {
-  const response = await fetch(`${BASE_URL}/getCandidates`);
+  const response = await fetch("https://diskvotingsystem-production.up.railway.app/getCandidates");
   const {candidates} = await response.json();
   console.log(candidates.length);
 
