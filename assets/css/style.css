@@ -1,10 +1,7 @@
 body {
     min-height: 100vh;
-    background-color: rgb(90, 171, 139);
-    background-image: url('../img/green-background.jpg');
-    background-size: cover;   
-    background-repeat: no-repeat;
-    background-position: center;  
+    background: url('../img/background.svg') no-repeat center center fixed;
+    background-size: cover;
 }
 
 /* Custom styles for radio buttons and selections */
