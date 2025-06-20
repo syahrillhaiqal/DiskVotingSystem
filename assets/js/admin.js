@@ -1,4 +1,4 @@
-const BASE_URL = "https://diskvoting.my";
+const BASE_URL= "https://diskvoting.my";
 const BASE_URL1 = "http://localhost:5000"; //test locally
 
 // --- Admin Login Logic ---
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
           rankColors[index]
         }"></i>
                             </div>
-                            <img src="../assets/img/placeholder-profile.jpg" alt="Candidate" class="w-16 h-16 rounded-full border-3 border-yellow-300 mb-2">
+                            <img src=${candidate.candidate_pic} alt="Candidate" class="w-16 h-16 rounded-full border-3 border-yellow-300 mb-2">
                             <h4 class="font-semibold text-gray-800 text-center text-sm">${
                               candidate.name
                             }</h4>
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
         card.className =
           "flex flex-col items-center p-4 bg-green-100 rounded-lg";
         card.innerHTML = `
-                            <img src="../assets/img/placeholder-profile.jpg" alt="Candidate" class="w-20 h-20 rounded-full">
+                            <img src=${candidate.candidate_pic} alt="Candidate" class="w-20 h-20 rounded-full">
                             <div><h4 class="font-semibold text-gray-800">${candidate.name}</h4></div>
                         `;
         container.appendChild(card);
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
       progress.className = "p-4 bg-gray-50 rounded-lg";
       progress.innerHTML = `
                         <div class="flex items-center mb-3">
-                            <img src="../assets/img/placeholder-profile.jpg" alt="Candidate" class="w-12 h-12 rounded-full mr-4">
+                            <img src="${candidate.candidate_pic}" alt="Candidate" class="w-12 h-12 rounded-full mr-4">
                             <div><h3 class="font-semibold text-gray-800">${candidate.name}</h3></div>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-6 mb-2">
