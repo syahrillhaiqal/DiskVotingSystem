@@ -126,6 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("totalVotes").textContent = stud.totalStudents;
         document.getElementById("voted").textContent = stud.totalVoted;
         document.getElementById("unvoted").textContent = stud.totalUnvoted;
+
+
         const container = document.getElementById("voterTable");
         if (container) container.innerHTML = "";
     }
@@ -263,6 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById(
                     `semester${sem}Rate`
                 ).textContent = `${rate}%`;
+                console.log(rate); //debug
                 document.getElementById(
                     `semester${sem}Details`
                 ).textContent = `${stats.voted}/${stats.total} students`;
