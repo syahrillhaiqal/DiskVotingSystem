@@ -235,12 +235,7 @@ function showAlert(message, type) {
     }, 5000);
 }
 
-async function checkID() {
-    const id = document.getElementById("id").value;
 
-    console.log("hello");
-    console.log("id", id);
-}
 
 function addVote() {
     alert("test");

@@ -1,423 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DISK Voting Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-</head>
-<body class="bg-gray-50 font-sans">
-
+  </head>
+  <body class="bg-gray-50 font-sans">
     <!-- Header -->
     <header class="bg-green-600 text-white shadow-lg">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <img src="../assets/img/logo-disk.jpg" alt="DISK Logo" style="width:100px;height:50px;object-fit:cover; border:none; border-radius:12px;" class="mr-2">
-                    <i class="fas fa-vote-yea text-2xl"></i>
-                    <h1 class="text-2xl font-bold">DISK Voting Dashboard</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="text-sm">
-                        <span class="opacity-75">Last Updated:</span>
-                        <span id="lastUpdated" class="font-semibold">12:34 PM, 2024-06-15</span>
-                    </div>
-                </div>
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <img
+              src="../assets/img/logo-disk.jpg"
+              alt="DISK Logo"
+              style="
+                width: 100px;
+                height: 50px;
+                object-fit: cover;
+                border: none;
+                border-radius: 12px;
+              "
+              class="mr-2"
+            />
+            <i class="fas fa-vote-yea text-2xl"></i>
+            <h1 class="text-2xl font-bold">DISK Voting Dashboard</h1>
+          </div>
+          <div class="flex items-center space-x-4">
+            <div class="text-sm">
+              <span class="opacity-75">Last Updated:</span>
+              <span id="lastUpdated" class="font-semibold"
+                >12:34 PM, 2024-06-15</span
+              >
             </div>
+          </div>
         </div>
+      </div>
     </header>
 
     <!-- Navigation Tabs -->
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div class="container mx-auto px-6">
-            <div class="flex space-x-8">
-                <button onclick="showTab('overview')" id="tab-overview" class="tab-btn py-4 px-2 border-b-2 border-green-500 text-green-600 font-medium">
-                    <i class="fas fa-chart-line mr-2"></i>Overview
-                </button>
-                <button onclick="showTab('results')" id="tab-results" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-poll mr-2"></i>Results
-                </button>
-                <button onclick="showTab('voters')" id="tab-voters" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-users mr-2"></i>Voters
-                </button>
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="flex space-x-8">
+          <button
+            onclick="showTab('overview')"
+            id="tab-overview"
+            class="tab-btn py-4 px-2 border-b-2 border-green-500 text-green-600 font-medium"
+          >
+            <i class="fas fa-chart-line mr-2"></i>Overview
+          </button>
+          <button
+            onclick="showTab('results')"
+            id="tab-results"
+            class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700"
+          >
+            <i class="fas fa-poll mr-2"></i>Results
+          </button>
+          <button
+            onclick="showTab('voters')"
+            id="tab-voters"
+            class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700"
+          >
+            <i class="fas fa-users mr-2"></i>Voters
+          </button>
         </div>
+      </div>
     </nav>
 
     <!-- Main Content -->
     <main class="container mx-auto px-6 py-8">
-        <!-- Overview Tab -->
-        <div id="overview-tab" class="tab-content">
-            <h2 class="text-xl font-bold text-gray-800 mb-6">2025/26 Disk Council Election</h2>
+      <!-- Overview Tab -->
+      <div id="overview-tab" class="tab-content">
+        <h2 class="text-xl font-bold text-gray-800 mb-6">
+          2025/26 Disk Council Election
+        </h2>
 
-            <!-- Card Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="bg-blue-100 p-3 rounded-full mr-4">
-                            <i class="fas fa-users text-blue-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Total Voters</p>
-                            <p class="text-2xl font-bold text-blue-800">500</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="bg-green-100 p-3 rounded-full mr-4">
-                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Students Already Voted</p>
-                            <p class="text-2xl font-bold text-green-800">432</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <div class="flex items-center">
-                        <div class="bg-orange-100 p-3 rounded-full mr-4">
-                            <i class="fas fa-clock text-orange-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-600 mb-1">Students Not Voted</p>
-                            <p class="text-2xl font-bold text-orange-600">68</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Card Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+              <div class="bg-blue-100 p-3 rounded-full mr-4">
+                <i class="fas fa-users text-blue-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600 mb-1">Total Voters</p>
+                <p class="text-2xl font-bold text-blue-800" id="totalVotes">
+                  ..
+                </p>
+              </div>
             </div>
+          </div>
 
-            <!-- Candidates Section -->
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-lg font-semibold">Total Candidates: 20</h3>
-                </div>
+          <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+              <div class="bg-green-100 p-3 rounded-full mr-4">
+                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600 mb-1">Students Already Voted</p>
+                <p class="text-2xl font-bold text-green-800" id="voted">..</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="flex items-center">
+              <div class="bg-orange-100 p-3 rounded-full mr-4">
+                <i class="fas fa-clock text-orange-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600 mb-1">Students Not Voted</p>
+                <p class="text-2xl font-bold text-orange-600" id="unvoted">
+                  ..
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Candidates Section -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold" id="totalCandidates">..</h3>
+          </div>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-6"
+            id="candidatesContainer"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Results Tab -->
+      <div id="results-tab" class="tab-content hidden">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-6">Election Results</h2>
+
+          <!-- Each Candidate Results List -->
+          <div class="space-y-6" id="candidateResults"></div>
+        </div>
+      </div>
+
+      <!-- Voters Tab -->
+      <div id="voters-tab" class="tab-content hidden">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-6">Voter Information</h2>
+
+          <!-- Voter Table with DataTables -->
+          <div class="overflow-x-auto">
+            <table id="votersTable" class="display" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="voterTable">
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <!-- Candidate Cards -->
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Hazami</h4>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Halami</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Habami</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Hanami</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Balidi</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Bibi</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Jembi</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Geligi</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Pratubi</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Ha Entah</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Ha Entah</h4>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col items-center p-4 bg-green-100 rounded-lg">
-                        <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-20 h-20 rounded-full">
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Naufal Ha Entah</h4>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
+              </tbody>
+            </table>
+          </div>
         </div>
-
-        <!-- Results Tab -->
-        <div id="results-tab" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-bold mb-6">Election Results</h2>
-                
-                <!-- Each Candidate Results List -->
-                <div class="space-y-6">
-
-
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <div class="flex items-center mb-3">
-                            <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-12 h-12 rounded-full mr-4">
-                            <div>
-                                <h3 class="font-semibold text-gray-800">Naufal Ha Entah</h3>
-                            </div>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-4 mb-2">
-                            <div class="bg-yellow-400 h-4 rounded-full flex items-center justify-end pr-2" style="width: 40%;">
-                                <span class="text-xs font-semibold">200 votes</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600">32.0% of total votes</p>
-                    </div>
-
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <div class="flex items-center mb-3">
-                            <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-12 h-12 rounded-full mr-4">
-                            <div>
-                                <h3 class="font-semibold text-gray-800">Naufal Ha Entah</h3>
-                            </div>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-4 mb-2">
-                            <div class="bg-green-600 h-4 rounded-full flex items-center justify-end pr-2" style="width: 20%;">
-                                <span class="text-xs text-white font-semibold">123 votes</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600">12.0% of total votes</p>
-                    </div>
-
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <div class="flex items-center mb-3">
-                            <img src="../assets/img/placeholder-profile.jpg" alt="Candidate 1" class="w-12 h-12 rounded-full mr-4">
-                            <div>
-                                <h3 class="font-semibold text-gray-800">Naufal Bombardilo</h3>
-                            </div>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-4 mb-2">
-                            <div class="bg-green-600 h-4 rounded-full flex items-center justify-end pr-2" style="width: 12%;">
-                                <span class="text-xs text-white font-semibold">32 votes</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600">10.0% of total votes</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- Voters Tab -->
-        <div id="voters-tab" class="tab-content hidden">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-bold mb-6">Voter Information</h2>
-
-                <!-- Voter Table with DataTables -->
-                <div class="overflow-x-auto">
-                    <table id="votersTable" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Vote Date/Time</th>
-                                <th>Course</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>V001</td>
-                                <td>Alice Smith</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 12:34</td>
-                                <td>Computer Science</td>
-                            </tr>
-                            <tr>
-                                <td>V002</td>
-                                <td>Bob Johnson</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">Pending</span></td>
-                                <td>-</td>
-                                <td>Business Administration</td>
-                            </tr>
-                            <tr>
-                                <td>V003</td>
-                                <td>Carol Williams</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 11:22</td>
-                                <td>Engineering</td>
-                            </tr>
-                            <tr>
-                                <td>V004</td>
-                                <td>David Brown</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 10:15</td>
-                                <td>Medicine</td>
-                            </tr>
-                            <tr>
-                                <td>V005</td>
-                                <td>Eva Davis</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">Pending</span></td>
-                                <td>-</td>
-                                <td>Arts</td>
-                            </tr>
-                            <tr>
-                                <td>V006</td>
-                                <td>Frank Miller</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 14:30</td>
-                                <td>Law</td>
-                            </tr>
-                            <tr>
-                                <td>V007</td>
-                                <td>Grace Wilson</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">Pending</span></td>
-                                <td>-</td>
-                                <td>Psychology</td>
-                            </tr>
-                            <tr>
-                                <td>V008</td>
-                                <td>Henry Moore</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 09:45</td>
-                                <td>Economics</td>
-                            </tr>
-                            <tr>
-                                <td>V009</td>
-                                <td>Iris Taylor</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 13:20</td>
-                                <td>Biology</td>
-                            </tr>
-                            <tr>
-                                <td>V010</td>
-                                <td>Jack Anderson</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">Pending</span></td>
-                                <td>-</td>
-                                <td>Chemistry</td>
-                            </tr>
-                            <tr>
-                                <td>V011</td>
-                                <td>Karen Thomas</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span></td>
-                                <td>2024-06-15 15:10</td>
-                                <td>Physics</td>
-                            </tr>
-                            <tr>
-                                <td>V012</td>
-                                <td>Leo Jackson</td>
-                                <td><span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">Pending</span></td>
-                                <td>-</td>
-                                <td>Mathematics</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+      </div>
     </main>
-
-    <script>
-        // Tab switching functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(content => content.classList.add('hidden'));
-            
-            // Remove active state from all tabs
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.classList.remove('border-green-500', 'text-green-600');
-                btn.classList.add('border-transparent', 'text-gray-500');
-            });
-            
-            // Show selected tab content
-            document.getElementById(tabName + '-tab').classList.remove('hidden');
-            
-            // Add active state to selected tab
-            const activeTab = document.getElementById('tab-' + tabName);
-            activeTab.classList.remove('border-transparent', 'text-gray-500');
-            activeTab.classList.add('border-green-500', 'text-green-600');
-        }
-
-        // Update last updated time
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            const dateString = now.toLocaleDateString('en-CA');
-            document.getElementById('lastUpdated').textContent = `${timeString}, ${dateString}`;
-        }
-
-        // Initialize DataTable
-        function initDataTable() {
-            $('#votersTable').DataTable({
-                "pageLength": 10,
-                "lengthMenu": [10, 25, 50, 100],
-                "order": [[ 0, "asc" ]],
-                "columnDefs": [
-                    { "orderable": false, "targets": 2 }
-                ],
-                "language": {
-                    "search": "Search voters:",
-                    "lengthMenu": "Show _MENU_ entries per page",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ voters",
-                    "paginate": {
-                        "first": "First",
-                        "last": "Last",
-                        "next": "Next",
-                        "previous": "Previous"
-                    }
-                }
-            });
-        }
-
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            updateTime();
-            initDataTable();
-            setInterval(updateTime, 60000);
-        });
-    </script>
-</body>
+    <script src="../assets/js/dashboard.js"></script>
+  </body>
 </html>

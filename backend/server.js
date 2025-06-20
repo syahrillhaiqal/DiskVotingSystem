@@ -87,38 +87,45 @@ app.post('/addVote', async (req, res) => {
 });
 
 
-app.post('/addVote', async (req, res) => {
-  const { votes,id } = req.body;
-  console.log("Received id",id)
 
-  if (!Array.isArray(votes) || votes.length !== 2) {
-    return res.status(400).json({ message: "You must vote for exactly 2 candidates." });
-  }
-
-  try {
-  const updateVote = await Students.updateOne({ id }, { $set: { voted:true } });
-  console.log("Updated student:", updateVote);
-  const updateResults = await Promise.all(
-  votes.map(id =>
-    Candidates.updateOne({ id }, { $inc: { total_votes: 1 } })
-  )
-  
-);
-
-  console.log("Results:", updateResults);
-
-    res.status(200).json({ message: "Votes recorded", results: updateResults });
-  } catch (e) {
-    console.error("Error updating votes:", e);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 
 app.get("/getCandidates", async (req, res) => {
   try {
     const candidates = await Candidates.find();
     res.status(200).json({ candidates });
+  } catch (error) {
+    console.error("Error fetching candidates:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/getStudents", async (req, res) => {
+  try {
+
+    const [ 
+      totalStudents, 
+      totalVoted, 
+      totalUnvoted
+    ] = await Promise.all([
+      Students.countDocuments({}),
+      Students.countDocuments({ voted: true }),
+      Students.countDocuments({ voted:  false})
+    ]);
+
+    res.status(200).json({ totalStudents,totalVoted,totalUnvoted });
+
+
+  } catch (error) {
+    console.error("Error fetching candidates:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/getVoters", async (req, res) => {
+  try {
+    const voters = await Students.find();
+    res.status(200).json({ voters });
   } catch (error) {
     console.error("Error fetching candidates:", error);
     res.status(500).json({ error: "Internal server error" });
