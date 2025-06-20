@@ -1,4 +1,4 @@
-const BASE_URL = "https://diskvotingsystem.up.railway.app";
+const BASE_URL = "https://diskvoting.my";
 const BASE_URL1 = "http://localhost:5000"; //test locally
 
 // --- Admin Login Logic ---
