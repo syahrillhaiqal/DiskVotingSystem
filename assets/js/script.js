@@ -321,6 +321,8 @@ async function loadCandidate() {
         candidates.forEach((candidate, index) => {
             // user 3 image only right now
             //const imageIndex = (index % 3) + 1; // because when 3 % 3, it will become 0 and then we +1, since the candidates got 20
+            console.log(candidate.candidates_vid);
+           
             const imageSrc = `${candidate.candidate_poster}`;
             const card = document.createElement("div");
             card.className =
@@ -339,7 +341,7 @@ async function loadCandidate() {
                 <div class="rounded-xl overflow-hidden mb-4 bg-gray-200">
                     <iframe
                     class="w-full h-48 md:h-56 border-0"
-                   src="https://www.youtube.com/embed/${candidate.candidate_vid}" 
+                   src="https://www.youtube.com/embed/${candidate.candidates_vid}"
                     title="Campaign Video"
                     loading="lazy"
                     allowfullscreen
