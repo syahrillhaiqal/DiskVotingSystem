@@ -40,7 +40,7 @@ document
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status}`); 
             }
 
             const data = await response.json();
@@ -321,7 +321,7 @@ async function loadCandidate() {
         candidates.forEach((candidate, index) => {
             // user 3 image only right now
             //const imageIndex = (index % 3) + 1; // because when 3 % 3, it will become 0 and then we +1, since the candidates got 20
-            const imageSrc = `../assets/img/candidate_poster/${candidate.candidate_poster}.png`;
+            const imageSrc = `../assets/img/candidate_poster/${candidate.candidate_poster}.webp`;
             const card = document.createElement("div");
             card.className =
                 "candidate-card bg-green-50 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent mb-6";
