@@ -28,7 +28,7 @@ document
         btnText.innerHTML = '<span class="spinner mr-2"></span>Verifying...';
         submitBtn.disabled = true;
 
-        console.log("id", studentId);
+        //console.log("id", studentId);
 
         try {
             const response = await fetch(`${BASE_URL}/check`, {
@@ -45,7 +45,7 @@ document
 
             const data = await response.json();
 
-            console.log("StudentData", data);
+            //console.log("StudentData", data);
             if (studentId !== "") {
                 // Simulate verification
                 setTimeout(() => {
@@ -162,7 +162,7 @@ async function confirmAndSubmitVote() {
     });
 
     const votes = Array.from(selectedCandidates.keys());
-    console.log("VOTES", votes);
+    //console.log("VOTES", votes);
 
     try {
         const response = await fetch(`${BASE_URL}/addVote`, {
@@ -178,7 +178,7 @@ async function confirmAndSubmitVote() {
         }
 
         const data = await response.json();
-        console.log("Vote submission response:", data);
+        //console.log("Vote submission response:", data);
 
         setTimeout(() => {
             // Show success modal
@@ -266,8 +266,8 @@ async function addVote() {
     }
 
     const voteValues = selected.map((box) => box.value);
-    console.log("Voted for:", voteValues);
-    console.log("id", id);
+    // console.log("Voted for:", voteValues);
+    // console.log("id", id);
 
     try {
         const response = await fetch(`${BASE_URL}/addVote`, {
@@ -283,7 +283,7 @@ async function addVote() {
         }
 
         const data = await response.json();
-        console.log("Vote submission response:", data);
+        //console.log("Vote submission response:", data);
         
         alert("Votes successfully recorded.");
         window.location.href = "index.html";
@@ -302,7 +302,7 @@ async function loadCandidate() {
         }
         
         const { candidates } = await response.json();
-        console.log(candidates);
+        //console.log(candidates);
 
         const container = document.getElementById("loadCandidates");
         container.innerHTML = "";
