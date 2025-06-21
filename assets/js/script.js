@@ -339,7 +339,7 @@ async function loadCandidate() {
                 <div class="rounded-xl overflow-hidden mb-4 bg-gray-200">
                     <iframe
                     class="w-full h-48 md:h-56 border-0"
-                    src="${candidate_vid}"
+                    src="${candidate.candidate_vid}"
                     title="Campaign Video"
                     loading="lazy"
                     allowfullscreen
