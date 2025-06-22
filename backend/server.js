@@ -62,33 +62,45 @@ app.post('/check', async (req,res) =>{
 
 // ADD VOTE
 app.post('/addVote', async (req, res) => {
-  const { votes,studentId } = req.body;
-  console.log("Received id",studentId)
-  console.log(votes)
+  const { votes, studentId } = req.body;
+  console.log("Received id", studentId);
+  console.log(votes);
 
   if (!Array.isArray(votes) || votes.length !== 2) {
-    console.log("error")
     return res.status(400).json({ message: "You must vote for exactly 2 candidates." });
   }
 
   try {
-  const updateVote = await Students.updateOne({  id : studentId }, { $set: { voted:true } });
-  console.log("Updated student:", updateVote);
-  const updateResults = await Promise.all(
-  votes.map(id =>
-    Candidates.updateOne({ id }, { $inc: { total_votes: 1 } })
-  )
-  
-);
+    // Check if the student already voted
+    const student = await Students.findOne({ id: studentId });
 
-  console.log("Results:", updateResults);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found." });
+    }
 
-    res.status(200).json({ message: "Votes recorded", results: updateResults });
-  } catch (e) {
-    console.error("Error updating votes:", e);
-    res.status(500).json({ error: "Internal server error" });
+    if (student.voted) {
+      return res.status(403).json({ message: "You have already voted." });
+    }
+
+    // Mark student as having voted
+    const updateVote = await Students.updateOne({ id: studentId }, { $set: { voted: true } });
+    console.log("Updated student:", updateVote);
+
+    // Increment votes for the selected candidates
+    const updateResults = await Promise.all(
+      votes.map(id =>
+        Candidates.updateOne({ id }, { $inc: { total_votes: 1 } })
+      )
+    );
+
+    return res.status(200).json({ message: "Votes successfully recorded." });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error." });
   }
 });
+
 
 // GET CANDIDATES DATA
 app.get("/getCandidates", async (req, res) => {
