@@ -302,7 +302,7 @@ async function loadCandidate() {
         }
         
         const { candidates } = await response.json();
-        //console.log(candidates);
+        console.log(candidates);
 
         const container = document.getElementById("loadCandidates");
         container.innerHTML = "";

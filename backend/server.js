@@ -93,7 +93,7 @@ app.post('/addVote', async (req, res) => {
 // GET CANDIDATES DATA
 app.get("/getCandidates", async (req, res) => {
   try {
-    const candidates = await Candidates.find();
+    const candidates = await Candidates.find().sort({name:1});
     res.status(200).json({ candidates });
   } catch (error) {
     console.error("Error fetching candidates:", error);
