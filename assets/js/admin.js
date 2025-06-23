@@ -63,6 +63,29 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchVotes();
     fetchCandidates();
     fetchProgress();
+
+    // --- Custom DataTable Filtering ---
+    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+      // Only apply to votersTable
+      if (settings.nTable.id !== 'votersTable') return true;
+      // Semester filter
+      var semester = $('#semesterFilter').val();
+      var semesterCol = data[2] || '';
+      if (semester) {
+        if (!semesterCol.includes('Sem ' + semester)) return false;
+      }
+      // Status filter
+      var status = $('#statusFilter').val();
+      var statusCol = data[3] || '';
+      if (status) {
+        if (!statusCol.includes(status)) return false;
+      }
+      return true;
+    });
+    // Event listeners for filters
+    $('#semesterFilter, #statusFilter').on('change', function() {
+      $('#votersTable').DataTable().draw();
+    });
   }
 
   // Tab switching

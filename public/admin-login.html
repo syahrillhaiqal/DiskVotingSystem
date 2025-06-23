@@ -211,6 +211,26 @@
 
                         <div class="bg-white rounded-lg shadow-md p-6">
                             <h3 class="text-lg font-bold mb-6">Voter Information</h3>
+                            <!-- Filter Controls -->
+                            <div class="flex flex-wrap gap-4 mb-4">
+                                <div>
+                                    <label for="semesterFilter" class="block text-xs font-semibold text-gray-600 mb-1">Semester</label>
+                                    <select id="semesterFilter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                        <option value="">All</option>
+                                        <option value="2">Semester 2</option>
+                                        <option value="4">Semester 4</option>
+                                        <option value="5">Semester 5</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="statusFilter" class="block text-xs font-semibold text-gray-600 mb-1">Status</label>
+                                    <select id="statusFilter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                        <option value="">All</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Voted">Voted</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="overflow-x-auto">
                                 <table id="votersTable" class="display" style="width: 100%">
                                     <thead>
