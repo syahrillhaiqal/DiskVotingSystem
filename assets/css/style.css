@@ -105,3 +105,62 @@ body {
     color: #991b1b;
     border-color: #fecaca;
 }
+
+/* Carousel Styles */
+.carousel-slide {
+    transition: all 0.3s ease;
+}
+
+.carousel-slide:hover {
+    transform: translateY(-5px);
+}
+
+#carouselTrack {
+    display: flex;
+    align-items: stretch;
+}
+
+/* Ensure proper spacing above footer */
+#candidatesSection {
+    padding-bottom: 2rem;
+}
+
+/* Mobile-first carousel adjustments */
+@media (max-width: 767px) {
+    #prevBtn, #nextBtn {
+        padding: 12px !important;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #prevBtn i, #nextBtn i {
+        font-size: 18px !important;
+    }
+    
+    .carousel-slide {
+        padding: 0 8px !important;
+        width: 100% !important; /* Force full width on mobile */
+    }
+    
+    /* Position indicator styling for mobile */
+    #currentPosition, #totalCandidates {
+        font-weight: 600;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .carousel-slide {
+        padding: 0 10px !important;
+        width: 50% !important; /* Force 2 cards per view on tablet */
+    }
+}
+
+@media (min-width: 1200px) {
+    .carousel-slide {
+        padding: 0 15px !important;
+        width: 33.333% !important; /* Force 3 cards per view on desktop */
+    }
+}

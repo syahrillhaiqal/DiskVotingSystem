@@ -43,7 +43,7 @@
         </nav>
 
         <!-- Main Content -->
-        <div class="container mx-auto px-4 py-5 flex-grow pt-20">
+        <div class="container mx-auto px-4 py-5 flex-grow pt-20 pb-24">
 
             <!-- Header Section -->
             <div class="relative text-center mb-10">
@@ -100,11 +100,44 @@
                     </p>
                 </div>
 
-                <!-- Candidate List -->
-                <div
-                    class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10"
-                    id="loadCandidates"
-                ></div>
+                <!-- Carousel Container -->
+                <div class="relative max-w-6xl mx-auto mb-20">
+                    <!-- Position Indicator -->
+                    <div class="text-center mb-4">
+                        <span class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-medium">
+                            <span id="currentPosition">1</span> of <span id="totalCandidates">22</span> candidates
+                        </span>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <button 
+                        id="prevBtn" 
+                        class="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+                        style="display: none;"
+                    >
+                        <i class="fas fa-chevron-left text-lg md:text-xl"></i>
+                    </button>
+                    
+                    <button 
+                        id="nextBtn" 
+                        class="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+                        style="display: none;"
+                    >
+                        <i class="fas fa-chevron-right text-lg md:text-xl"></i>
+                    </button>
+
+                    <!-- Carousel Track -->
+                    <div class="overflow-hidden">
+                        <div 
+                            id="carouselTrack" 
+                            class="flex transition-transform duration-500 ease-in-out"
+                            style="transform: translateX(0px);"
+                        >
+                            <!-- Candidates will be loaded here -->
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
 

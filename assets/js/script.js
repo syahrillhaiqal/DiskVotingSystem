@@ -14,6 +14,145 @@ const BASE_URL1 = "http://localhost:5000"; //test locally
 let selectedCandidates = new Map(); // Map to store candidate ID -> name
 let currentStudentId = "";
 
+// Carousel variables
+let currentSlide = 0;
+let totalSlides = 0;
+let slidesPerView = 1; // Will be calculated based on screen size
+
+// Calculate slides per view based on screen size
+function calculateSlidesPerView() {
+    const width = window.innerWidth;
+    if (width >= 1200) { // lg screens and above
+        return 3;
+    } else if (width >= 768) { // md screens (tablet)
+        return 2;
+    } else { // sm and below - mobile first (phones)
+        return 1;
+    }
+}
+
+// Update position indicator
+function updatePositionIndicator() {
+    const currentPositionEl = document.getElementById('currentPosition');
+    const totalCandidatesEl = document.getElementById('totalCandidates');
+    
+    if (currentPositionEl && totalCandidatesEl) {
+        currentPositionEl.textContent = currentSlide + 1;
+        totalCandidatesEl.textContent = totalSlides;
+    }
+}
+
+// Update carousel navigation
+function updateCarouselNavigation() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    // Show/hide navigation buttons
+    prevBtn.style.display = currentSlide === 0 ? 'none' : 'block';
+    nextBtn.style.display = currentSlide >= totalSlides - slidesPerView ? 'none' : 'block';
+    
+    // Update position indicator
+    updatePositionIndicator();
+}
+
+// Move carousel to specific slide
+function goToSlide(slideIndex) {
+    const track = document.getElementById('carouselTrack');
+    
+    // Calculate slide width based on screen size
+    const width = window.innerWidth;
+    let slideWidth;
+    if (width >= 1200) {
+        slideWidth = 33.333; // 3 cards per view
+    } else if (width >= 768) {
+        slideWidth = 50; // 2 cards per view
+    } else {
+        slideWidth = 100; // 1 card per view on mobile
+    }
+    
+    const translateX = -(slideIndex * slideWidth);
+    track.style.transform = `translateX(${translateX}%)`;
+    currentSlide = slideIndex;
+    updateCarouselNavigation();
+}
+
+// Next slide
+function nextSlide() {
+    if (currentSlide < totalSlides - slidesPerView) {
+        goToSlide(currentSlide + 1);
+    }
+}
+
+// Previous slide
+function prevSlide() {
+    if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+    }
+}
+
+// Handle window resize
+function handleResize() {
+    const newSlidesPerView = calculateSlidesPerView();
+    if (newSlidesPerView !== slidesPerView) {
+        slidesPerView = newSlidesPerView;
+        
+        // Update all slide widths
+        const slides = document.querySelectorAll('.carousel-slide');
+        const width = window.innerWidth;
+        
+        slides.forEach(slide => {
+            if (width >= 1200) {
+                slide.style.width = '33.333%';
+            } else if (width >= 768) {
+                slide.style.width = '50%';
+            } else {
+                slide.style.width = '100%';
+            }
+        });
+        
+        goToSlide(0); // Reset to first slide
+    }
+}
+
+// Keyboard navigation support
+function handleKeyDown(e) {
+    if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextSlide();
+    }
+}
+
+// Touch/swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+function handleTouchStart(e) {
+    touchStartX = e.changedTouches[0].screenX;
+}
+
+function handleTouchEnd(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const swipeThreshold = 50; // Minimum distance for swipe
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            // Swipe left - next slide
+            nextSlide();
+        } else {
+            // Swipe right - previous slide
+            prevSlide();
+        }
+    }
+}
+
 // Student ID submit
 document
     .getElementById("studentForm")
@@ -304,12 +443,14 @@ async function loadCandidate() {
         const { candidates } = await response.json();
         console.log(candidates);
 
-        const container = document.getElementById("loadCandidates");
-        container.innerHTML = "";
+        const track = document.getElementById("carouselTrack");
+        
+        // Clear previous content
+        track.innerHTML = "";
 
         if (!candidates || candidates.length === 0) {
-            container.innerHTML = `
-                <div class="col-span-full text-center py-8">
+            track.innerHTML = `
+                <div class="w-full text-center py-8">
                     <i class="fas fa-exclamation-triangle text-4xl text-gray-400 mb-4"></i>
                     <p class="text-gray-600 text-lg">No candidates available at the moment.</p>
                     <p class="text-gray-500 text-sm">Please check back later.</p>
@@ -318,49 +459,70 @@ async function loadCandidate() {
             return;
         }
 
+        // Calculate slides per view
+        slidesPerView = calculateSlidesPerView();
+        totalSlides = candidates.length;
+
+        // Create carousel slides
         candidates.forEach((candidate, index) => {
-            // user 3 image only right now
-            //const imageIndex = (index % 3) + 1; // because when 3 % 3, it will become 0 and then we +1, since the candidates got 20
-            console.log(candidate.candidates_vid);
-           
             const imageSrc = `${candidate.candidate_poster}`;
-            const card = document.createElement("div");
-            card.className =
-                "candidate-card bg-green-50 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent mb-6";
-            card.innerHTML = `
-                <div class="w-full aspect-[9/16] bg-gray-200 flex items-center justify-center overflow-hidden">
-                <img
-                    src="${imageSrc}"
-                    class="object-cover w-full h-full"
-                    alt="Candidate ${index + 1}"
-                    onerror="this.src='../assets/img/placeholder-profile.jpg'"
-                    loading="lazy"
-                />
-                </div>
-                <div class="p-5 md:p-6">
-                <div class="rounded-xl overflow-hidden mb-4 bg-gray-200">
-                    <iframe
-                    class="w-full h-48 md:h-56 border-0"
-                   src="https://www.youtube.com/embed/${candidate.candidates_vid}"
-                    title="Campaign Video"
-                    loading="lazy"
-                    allowfullscreen
-                    ></iframe>
-                </div>
-                <div
-                    class="candidate-selector flex items-center gap-4 p-4 bg-gray-300 rounded-xl cursor-pointer my-4 transition-all duration-300"
-                    data-candidate="${candidate.id}"
-                    data-name="${candidate.name}"
-                > 
-                    <div class="custom-radio w-6 h-6 border-3 border-primary-400 rounded-full flex-shrink-0 relative"></div>
-                    <h3 class="candidate-name text-sm md:text-xl font-bold m-0">Vote for ${
-                        candidate.name
-                    }</h3>
-                </div>
+            const slide = document.createElement("div");
+            slide.className = "carousel-slide flex-shrink-0";
+            
+            // Calculate width based on screen size
+            const width = window.innerWidth;
+            if (width >= 1200) {
+                slide.style.width = '33.333%'; // 3 cards per view
+            } else if (width >= 768) {
+                slide.style.width = '50%'; // 2 cards per view
+            } else {
+                slide.style.width = '100%'; // 1 card per view on mobile
+            }
+            
+            slide.style.padding = '0 10px';
+            
+            slide.innerHTML = `
+                <div class="candidate-card bg-green-50 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl border-3 border-transparent h-full">
+                    <div class="w-full aspect-[9/16] bg-gray-200 flex items-center justify-center overflow-hidden">
+                        <img
+                            src="${imageSrc}"
+                            class="object-cover w-full h-full"
+                            alt="Candidate ${index + 1}"
+                            onerror="this.src='../assets/img/placeholder-profile.jpg'"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <div class="rounded-xl overflow-hidden mb-3 bg-gray-200">
+                            <iframe
+                                class="w-full h-32 md:h-40 border-0"
+                                src="https://www.youtube.com/embed/${candidate.candidates_vid}"
+                                title="Campaign Video"
+                                loading="lazy"
+                                allowfullscreen
+                            ></iframe>
+                        </div>
+                        <div
+                            class="candidate-selector flex items-center gap-3 p-3 bg-gray-300 rounded-xl cursor-pointer transition-all duration-300"
+                            data-candidate="${candidate.id}"
+                            data-name="${candidate.name}"
+                        > 
+                            <div class="custom-radio w-5 h-5 border-3 border-primary-400 rounded-full flex-shrink-0 relative"></div>
+                            <h3 class="candidate-name text-sm md:text-lg font-bold m-0">Vote for ${candidate.name}</h3>
+                        </div>
+                    </div>
                 </div>
             `;
-            container.appendChild(card);
+            track.appendChild(slide);
         });
+
+        // Attach event listeners to navigation buttons
+        document.getElementById('prevBtn').onclick = prevSlide;
+        document.getElementById('nextBtn').onclick = nextSlide;
+
+        // Add touch/swipe support for mobile
+        track.addEventListener('touchstart', handleTouchStart, { passive: true });
+        track.addEventListener('touchend', handleTouchEnd, { passive: true });
 
         // Attach event listeners to the dynamically added selectors
         document.querySelectorAll(".candidate-selector").forEach((selector) => {
@@ -406,12 +568,22 @@ async function loadCandidate() {
                 }
             });
         });
+
+        // Initialize carousel navigation
+        updateCarouselNavigation();
+
+        // Add window resize listener
+        window.addEventListener('resize', handleResize);
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', handleKeyDown);
+
     } catch (error) {
         console.error("Error loading candidates:", error);
         
-        const container = document.getElementById("loadCandidates");
-        container.innerHTML = `
-            <div class="col-span-full text-center py-8">
+        const track = document.getElementById("carouselTrack");
+        track.innerHTML = `
+            <div class="w-full text-center py-8">
                 <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
                 <p class="text-red-600 text-lg font-semibold mb-2">Failed to load candidates</p>
                 <p class="text-gray-600 text-sm mb-4">There was an error connecting to the server.</p>
