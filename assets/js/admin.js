@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
       voters.forEach((voter) => {
         const status = voter.voted
           ? `<span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Voted</span>`
-          : `<span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>`;
+          : `<span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Unvoted</span>`;
 
         let semesterBadge = "";
 

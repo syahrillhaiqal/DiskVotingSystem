@@ -167,8 +167,6 @@ document
         btnText.innerHTML = '<span class="spinner mr-2"></span>Verifying...';
         submitBtn.disabled = true;
 
-        //console.log("id", studentId);
-
         try {
             const response = await fetch(`${BASE_URL}/check`, {
                 method: "POST",
@@ -184,7 +182,6 @@ document
 
             const data = await response.json();
 
-            //console.log("StudentData", data);
             if (studentId !== "") {
                 // Simulate verification
                 setTimeout(() => {
