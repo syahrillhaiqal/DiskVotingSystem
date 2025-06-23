@@ -183,6 +183,7 @@ document
             }
 
             const data = await response.json();
+            console.log(data);
 
             //console.log("StudentData", data);
             if (studentId !== "") {
@@ -203,7 +204,7 @@ document
                     // Update instruction text
                     document.getElementById(
                         "instruction-text"
-                    ).textContent = `Welcome, ${studentId}. Please select your preferred candidates.`;
+                    ).textContent = `Welcome, ${data.stud[0].name}. Please select your preferred candidates.`;
 
                     // Reset button
                     btnText.textContent = "Continue to Vote";
