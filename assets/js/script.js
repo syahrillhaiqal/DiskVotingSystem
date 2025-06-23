@@ -495,7 +495,7 @@ async function loadCandidate() {
                     <div class="p-4 md:p-5">
                         <div class="rounded-xl overflow-hidden mb-3 bg-gray-200">
                             <iframe
-                                class="w-full h-32 md:h-40 border-0"
+                                class="w-full h-56 md:h-40 border-0"
                                 src="https://www.youtube.com/embed/${candidate.candidates_vid}"
                                 title="Campaign Video"
                                 loading="lazy"
@@ -561,10 +561,13 @@ async function loadCandidate() {
 
                 // Show or hide action bar based on selection
                 const actionBar = document.getElementById("actionBar");
+                const candidatesSection = document.getElementById("candidatesSection");
                 if (selectedCandidates.size > 0) {
                     actionBar.classList.remove("hidden");
+                    candidatesSection.classList.add("with-action-bar");
                 } else {
                     actionBar.classList.add("hidden");
+                    candidatesSection.classList.remove("with-action-bar");
                 }
             });
         });

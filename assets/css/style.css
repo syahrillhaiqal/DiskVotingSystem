@@ -122,7 +122,11 @@ body {
 
 /* Ensure proper spacing above footer */
 #candidatesSection {
-    padding-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    transition: padding-bottom 0.3s;
+}
+#candidatesSection.with-action-bar {
+    padding-bottom: 5rem;
 }
 
 /* Mobile-first carousel adjustments */
