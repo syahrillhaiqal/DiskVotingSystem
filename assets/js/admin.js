@@ -286,9 +286,9 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("totalvoted2", totalVoted2);
       console.log("totalvoted5", totalVoted5);
 
-      const rate2 = totalVoted2 / totalPart2;
-      const rate4 = totalVoted4 / totalPart4;
-      const rate5 = totalVoted5 / totalPart5;
+      const rate2 = totalVoted2 / totalPart2 * 100;
+      const rate4 = totalVoted4 / totalPart4 * 100;
+      const rate5 = totalVoted5 / totalPart5 * 100;
       console.log(rate4.toFixed(2) + "%");
       console.log(rate2.toFixed(2) + "%");
       console.log(rate5.toFixed(2) + "%");
