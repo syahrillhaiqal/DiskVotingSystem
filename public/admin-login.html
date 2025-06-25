@@ -210,7 +210,16 @@
                         </div>
 
                         <div class="bg-white rounded-lg shadow-md p-6">
-                            <h3 class="text-lg font-bold mb-6">Voter Information</h3>
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-bold">Voter Information</h3>
+                                <button 
+                                    id="printVotersBtn" 
+                                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center"
+                                    onclick="printVotersTable()"
+                                >
+                                    <i class="fas fa-print mr-2"></i>Print Table
+                                </button>
+                            </div>
                             <!-- Filter Controls -->
                             <div class="flex flex-wrap gap-4 mb-4">
                                 <div>
